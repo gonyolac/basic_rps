@@ -1,0 +1,55 @@
+<script type="text/javascript">
+  function computerPlay() {
+    selection = ["rock","paper","scissors"];
+    return selection[Math.floor(Math.random()*selection.length)]
+  } 
+
+  function playRound(playerSelection, computerSelection) {
+    playerSelection = playerSelection.toLowerCase();
+    selection = ["rock","paper","scissors"];
+
+    if (selection.indexOf(playerSelection) == -1) {
+      return "That's not valid";
+    }
+    
+    
+    if (playerSelection == computerSelection) {
+      return "It's a tie"
+    } else if (computerSelection == "rock") {
+      return playerSelection == "paper" ? "Player Wins!" : "Computer Wins!"
+    } else if (computerSelection == "paper") {
+      return playerSelection == "scissors" ? "Player Wins!" : "Computer Wins!"
+    } else if (computerSelection == "scissors") {
+      return playerSelection == "rock" ? "Player Wins!" : "Computer Wins!"
+    } 
+  }
+
+  function game() {
+    playerScore = 0;
+    computerScore = 0;
+
+    let n = 1;
+    while (n < 6) {
+      console.log('Round ' + n)
+      userChoice = prompt("Your move: ");
+      result = playRound(userChoice,computerPlay());
+
+      if (result == "Player Wins!") {
+        console.log("Player Wins!");
+        playerScore++;
+      } else if (result == "Computer Wins!") {
+        console.log("Computer Wins!");
+        computerScore++;
+      } else {
+        console.log("Tie!");
+      }
+    n++;
+    console.log("Player - " + playerScore + " Computer - " + computerScore);
+    }
+
+    return "Final score: Player - " + playerScore + " Computer - " + computerScore
+  }
+
+</script>
+
+
