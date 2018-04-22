@@ -1,55 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RPS modified</title>
+</head>
+<body>
+  <div id="picks">
+    <button id="rock">ROCK</button>
+    <button id="paper">PAPER</button>
+    <button id="scissors">SCISSORS</button>
+  </div>
+  <div id="results">
+  </div>
+</body>
+
 <script type="text/javascript">
   function computerPlay() {
     selection = ["rock","paper","scissors"];
     return selection[Math.floor(Math.random()*selection.length)]
   } 
 
-  function playRound(playerSelection, computerSelection) {
+  function playRound(playerSelection) {
+    let computerSelection = computerPlay();
     playerSelection = playerSelection.toLowerCase();
     selection = ["rock","paper","scissors"];
-
-    if (selection.indexOf(playerSelection) == -1) {
-      return "That's not valid";
-    }
-    
     
     if (playerSelection == computerSelection) {
-      return "It's a tie"
+      results.textContent = `Player and CPU picked ${playerSelection.toUpperCase()}, TIE!`
     } else if (computerSelection == "rock") {
-      return playerSelection == "paper" ? "Player Wins!" : "Computer Wins!"
+      playerSelection == "paper" ? results.textContent = "Player Wins! PAPER" : results.textContent = "CPU Wins! ROCK"
     } else if (computerSelection == "paper") {
-      return playerSelection == "scissors" ? "Player Wins!" : "Computer Wins!"
+      playerSelection == "scissors" ? results.textContent = "Player Wins! SCISSORS" : results.textContent = "CPU Wins! PAPER"
     } else if (computerSelection == "scissors") {
-      return playerSelection == "rock" ? "Player Wins!" : "Computer Wins!"
+      playerSelection == "rock" ? results.textContent = "Player Wins! ROCK" : results.textContent = "CPU Wins! SCISSORS"
     } 
   }
 
-  function game() {
-    playerScore = 0;
-    computerScore = 0;
+  const results = document.querySelector('#results');
 
-    let n = 1;
-    while (n < 6) {
-      console.log('Round ' + n)
-      userChoice = prompt("Your move: ");
-      result = playRound(userChoice,computerPlay());
-
-      if (result == "Player Wins!") {
-        console.log("Player Wins!");
-        playerScore++;
-      } else if (result == "Computer Wins!") {
-        console.log("Computer Wins!");
-        computerScore++;
-      } else {
-        console.log("Tie!");
-      }
-    n++;
-    console.log("Player - " + playerScore + " Computer - " + computerScore);
-    }
-
-    return "Final score: Player - " + playerScore + " Computer - " + computerScore
-  }
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      playRound(btn.id);
+    });
+  });
 
 </script>
-
-
