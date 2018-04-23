@@ -10,30 +10,84 @@
     <button id="paper">PAPER</button>
     <button id="scissors">SCISSORS</button>
   </div>
+  <br>
   <div id="results">
+  </div>
+  <div id="tally">
+    <p>Player Score: <a id="pscore"></a></p>
+    <p>CPU Score: <a id="cpuscore"></a></p>
   </div>
 </body>
 
 <script type="text/javascript">
+
+  let playerScore = 0;
+  let computerScore = 0;
+
+  function newGame() {
+    playerScore = 0;
+    computerScore = 0;
+    document.getElementById("pscore").innerHTML = playerScore;
+    document.getElementById("cpuscore").innerHTML = computerScore;
+    document.getElementById("results").innerHTML = "";
+  } 
+
+  function isgameOver() {
+     if (playerScore == 5) {
+      alert('You win!');
+      newGame();
+     } else if (computerScore == 5) {
+      alert('Computer Wins!')
+      newGame();
+     }
+  }
+
   function computerPlay() {
     selection = ["rock","paper","scissors"];
     return selection[Math.floor(Math.random()*selection.length)]
-  } 
+  }
+
+  function playerWin () {
+    playerScore++
+    document.getElementById("pscore").innerHTML = playerScore;  
+  }
+
+  function computerWin () {
+    computerScore++
+    document.getElementById("cpuscore").innerHTML = computerScore;
+  }
 
   function playRound(playerSelection) {
     let computerSelection = computerPlay();
-    playerSelection = playerSelection.toLowerCase();
-    selection = ["rock","paper","scissors"];
     
     if (playerSelection == computerSelection) {
-      results.textContent = `Player and CPU picked ${playerSelection.toUpperCase()}, TIE!`
+      results.textContent = `Player and CPU picked ${playerSelection}, TIE!`
     } else if (computerSelection == "rock") {
-      playerSelection == "paper" ? results.textContent = "Player Wins! PAPER" : results.textContent = "CPU Wins! ROCK"
+      if (playerSelection == "paper") {
+        results.textContent = "Player Wins! PAPER > ROCK";
+        playerWin();
+      } else {
+        results.textContent = "CPU Wins! ROCK > SCISSORS";
+        computerWin();
+      }
     } else if (computerSelection == "paper") {
-      playerSelection == "scissors" ? results.textContent = "Player Wins! SCISSORS" : results.textContent = "CPU Wins! PAPER"
+      if (playerSelection == "scissors") {
+        results.textContent = "Player Wins! Scissors > PAPER";
+        playerWin();
+      } else {
+        results.textContent = "CPU Wins! Paper > ROCK";
+        computerWin();
+      }
     } else if (computerSelection == "scissors") {
-      playerSelection == "rock" ? results.textContent = "Player Wins! ROCK" : results.textContent = "CPU Wins! SCISSORS"
+      if (playerSelection == "rock") {
+        results.textContent = "Player Wins! ROCK > Scissors";
+        playerWin();
+      } else {
+        results.textContent = "CPU Wins! SCISSORS > PAPER";
+        computerWin();
+      }
     } 
+    isgameOver();
   }
 
   const results = document.querySelector('#results');
